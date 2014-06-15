@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Site.css" rel="stylesheet" type="text/css" />
+    <title>Crystal Landry Colson</title>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body style="border: 0 none; background-color: #4DA2E0;">
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div style="min-height: 700px; width: 960px;">
+        <div class="dvLeftPanel">
+            <a class="title" href="Home">Crystal Landry Colson</a>
+            <p style="font-size: 35px; line-height: .2em;">Graphic Artist</p>
+            <div class="divider" style="height: 6px; width: 100%; text-align: center;"></div>
+            <div style="text-align: center; margin-top: 0px; padding: 5px 5px 5px 5px;">
+                <img src="/Content/Pictures/painting_01.jpg" style="height: 50px;" />
+                <img src="/Content/Pictures/painting_02.jpg" style="height: 50px;" />
+                <img src="/Content/Pictures/painting_03.jpg" style="height: 50px;" />
+            </div>
+            <div class="divider" style="height: 4px; width: 100%; text-align: center;"></div>
+            <br />
+            <div class="MenuItemContainer">
+                <a href="/home">
+                    <div style="width: 100%;">
+                        <div class="MenuItemFiller"></div>
+                        <div class="MenuItem">portfolio</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </a>
+                <a href="/bio">
+                    <div style="width: 100%;">
+                        <div class="MenuItemFiller"></div>
+                        <div class="MenuItem">bio</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </a>
+                <a href="/contact">
+                    <div style="width: 100%;">
+                        <div class="MenuItemFiller"></div>
+                        <div class="MenuItem">contact</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </a>
+                <br />
+            </div>
+            <br />
+            <div style="text-align: center;">
+                <a href="raw" class=".MenuItem">
+                    <img src="/Content/SiteImages/RawLogo.png" class="menuLink" />
+                </a>
+                <a href="facebook">
+                    <img src="/Content/SiteImages/facebookLogo.png" class="menuLink" />
+                </a>
+                <a href="twitter">
+                    <img src="/Content/SiteImages/twitterLogo.jpg" class="menuLink" />
+                </a>
+                <a href="pinterest">
+                    <img src="/Content/SiteImages/PinterestLogo.png" class="menuLink" />
+                </a>
+            </div>
+        </div>
+        <div class="dvMainPanel">
+            @RenderBody()
+        </div>
+        <div style="clear: both;"></div>
+        <div id="footer" style="text-align: center; margin-left: 250px;">
+            <p>2013 Crystal Landry Colson</p>
+        </div>
+    </div>
+</body>
+</html>

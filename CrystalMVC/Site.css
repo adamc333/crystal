@@ -1,0 +1,186 @@
+﻿
+/* General */
+a {
+    color: #333;
+    outline: none;
+    text-decoration: none;
+}
+
+    a:link, a:visited, a:active, a:hover {
+        color: #333;
+    }
+
+h1, h2, h3, h4, h5, h6, input, textarea, div, p {
+    font-family: 'Trebuchet MS';
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 50px;
+    line-height: .7em;
+}
+
+input[type=text], textarea {
+    border: 2px solid #ccc;
+}
+
+.title {
+    font-family: 'Segoe UI', Consolas, "Courier New", Courier, monospace;
+    font-size: 55px;
+    line-height: .9em;
+    margin: 0;
+}
+
+.dvLeftPanel {
+    background-color: whitesmoke;
+    padding: 8px 8px 8px 8px;
+    height: 100%;
+    width: 225px;
+    float: left;
+    box-shadow: gray 12px 12px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.dvMainPanel {
+    background-color: whitesmoke;
+    padding: 8px 8px 8px 8px;
+    height: 100%;
+    width: 680px;
+    min-height: 700px;
+    float: right;
+    box-shadow: gray 12px 12px;
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid gray;
+}
+
+.divider {
+    background-color: black;
+    border-radius: 2px 2px 2px 2px;
+    width: 100%;
+}
+
+/* Menu */
+
+.MenuItem {
+    text-align: center;
+    font-size: 35px;
+    float: left;
+    padding-bottom: 8px;
+}
+
+    .MenuItem:hover, .close:hover {
+        background: orange;
+    }
+
+.MenuItemFiller {
+    background-color: #4DA2E0;
+    height: 30px;
+    width: 30px;
+    border-radius: 2px;
+    float: left;
+    margin: 5px;
+}
+
+.MenuItemContainer {
+    text-align: center;
+}
+
+.menuLink {
+    margin: 5px;
+    height: 35px;
+}
+
+/* Thumbs */
+
+.MainPortfolioThumb {
+    height: 75px;
+    border: 10px solid #4DA2E0;
+    margin: 5px 5px 5px 5px;
+}
+
+    .MainPortfolioThumb:hover {
+        border-color: orange;
+        cursor: pointer;
+    }
+
+/* Button */
+
+.contactButton {
+    width: 100px;
+    height: 25px;
+    background-color: #4DA2E0;
+    border-radius: 4px;
+    float: left;
+    margin: 10px;
+    border: 1px solid gray;
+    text-align:center;
+}
+
+.PictureScrollButton {
+    font-size: 44px;
+    margin: 10px;
+    font-weight: bold;
+    background-color: #4DA2E0;
+    padding: 5px;
+    border-radius: 4px;
+    font-family: Aharoni;
+}
+
+    .PictureScrollButton:hover, .contactButton:hover {
+        background-color: orange;
+        cursor: pointer;
+    }
+
+/* Modal */
+
+.modalDialog {
+    position: fixed;
+    top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+    text-align:center;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    padding: 50px 150px 100px 150px;
+}
+
+    .modalDialog:target {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .modalDialog > div {
+        position: relative;
+        padding: 5px 20px 13px 20px;
+        border-radius: 10px;
+        background: #fff;
+        background: -moz-linear-gradient(#fff, #999);
+        background: -webkit-linear-gradient(#fff, #999);
+        background: -o-linear-gradient(#fff, #999);
+        color:white;
+        border: 2px solid black;
+    }
+
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+    .close:hover {
+        cursor: pointer;
+    }

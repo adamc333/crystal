@@ -1,0 +1,166 @@
+﻿@using System.Web.UI.HtmlControls;
+@model CrystalMVC.Models.ThumbnailGallery
+
+@{
+    Layout = "~/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script type="text/javascript">
+
+        //hide big modal to start
+        $(document).ready(function() {
+            $("#divModal").hide();
+        });
+
+        //show and update big modal
+        function UpdateModalPic(imageSrc) {
+            $("#divModal").fadeIn(800);
+            $("#imgModal").attr('src', imageSrc)
+        }
+
+        //close big modal
+        function CloseModal() {
+            $("#divModal").hide();
+        }
+
+        //get the previous or next image to show in the modal
+        function ModalButtonClick(isPreviousClick) {
+            //get filename from src of modal image
+            var imgModalSrc = $('#imgModal').prop('src');
+            var currentImageFileName = imgModalSrc.substring(imgModalSrc.lastIndexOf('/') + 1, imgModalSrc.length);
+
+            if (isPreviousClick) {
+                $.getJSON("Home/GetPreviousPicture?currentSrc=" + currentImageFileName, null, function (data) {
+                    $('#imgModal').attr('src', data.OriginalPath);
+                });
+            }
+            else {
+                $.getJSON("Home/GetNextPicture?currentSrc=" + currentImageFileName, null, function (data) {
+                    $('#imgModal').attr('src', data.OriginalPath);
+                });
+            }
+        }
+
+        //cycle through available thumbs
+        function LeftButtonClick() {
+            $.getJSON("Home/GetThumbList", null, function (data) {
+
+                var currentPageNumber = parseInt($('#lbCurrentPage').text());
+
+                if (currentPageNumber > 1) {
+
+                    var counter = 0;
+                    var srcs = [];
+                    var alts = [];
+
+                    //loop through json data, which is page count then an array of thumbs
+                    $.each(data, function () {
+                        if (counter != 0) {
+                            $.each(this, function () {
+                                srcs.push(this.thumbPath);
+                                alts.push(this.originalPath);
+                            });
+                        }
+                        counter++;
+                    });
+
+                    SetThumbs(srcs, alts, currentPageNumber - 1);
+                    $('#lbCurrentPage').text(currentPageNumber - 1);
+                    $('img.MainPortfolioThumb').show(2000);
+                }
+            });
+        }
+
+        function RightButtonClick() {
+
+            $.getJSON("Home/GetThumbList", null, function (data) {
+
+                var maxPageNumber = parseInt($('#lbTotalPages').text());
+                var currentPageNumber = parseInt($('#lbCurrentPage').text());
+
+                if (currentPageNumber < maxPageNumber) {
+
+                    var counter = 0;
+                    var srcs = [];
+                    var alts = [];
+
+                    //loop through json data, which is page count then an array of thumbs
+                    $.each(data, function () {
+                        if (counter != 0) {
+                            $.each(this, function () {
+                                srcs.push(this.thumbPath);
+                                alts.push(this.originalPath);
+                            });
+                        }
+                        counter++;
+                    });
+
+                    //send the arrays to helper to set new srcs and alts of thumbs
+                    SetThumbs(srcs, alts, currentPageNumber + 1);
+                    $('#lbCurrentPage').text(currentPageNumber + 1);
+                    $('img.MainPortfolioThumb').show(2000);
+                }
+            });
+        }
+
+        //set new src and alts for the thumbs
+        function SetThumbs(srcs, alts, newPageNumber) {
+
+            $('img.MainPortfolioThumb').hide(1000);
+
+            for (var i = 1; i < 21; i++) {
+                var pageNumberOffset = 20 * (newPageNumber - 1);
+                $('#imgThumb_' + i).attr('src', srcs[i + pageNumberOffset]);
+                $('#imgThumb_' + i).attr('alt', alts[i + pageNumberOffset]);
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div id="divPortfolioThumbnailWrapper" runat="server">
+        <h1>Portfolio</h1>
+        <div id="divModal" class="modalDialog">
+            <div>
+                <span onclick="CloseModal()" class="close">X</span>
+                <div>
+                    <h1 style="color: black; text-align: left; font-family: 'Trebuchet MS'">Crystal Landry Colson</h1>
+                    <div class="divider" style="height: 6px; width: 100%; text-align: center;"></div>
+                    <img id="imgModal" src="" style="height: 500px; margin: 20px 0px 20px 0px" />
+                    <br />
+                    <div class="divider" style="height: 3px; width: 100%; text-align: center;"></div>
+                    <br />
+                    <div style="text-align: center;">
+                        <label id="lbModalBackButton" onclick="ModalButtonClick(true)" class="PictureScrollButton"><</label>
+                        <label id="lbModalNextButton" onclick="ModalButtonClick(false)" class="PictureScrollButton">></label>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="divider" style="height: 8px; border-radius: 2px;"></div>
+        <div id="divThumbs" style="text-align: center; padding: 20px; height: 540px;">
+            @foreach (var thumb in Model.Gallery)
+            {
+                <img id="imgThumb_@thumb.ID.ToString()" src="@thumb.ThumbPath" alt="@thumb.OriginalPath" class="MainPortfolioThumb" onclick="UpdateModalPic(this.alt);">
+            }
+            <br />
+        </div>
+        <div class="divider" style="height: 4px; border-radius: 2px;"></div>
+        <div style="text-align: center; padding: 20px 20px 0px 20px;">
+            <label id="lbLeftButton" onclick="LeftButtonClick()" class="PictureScrollButton"><</label>
+            <label id="lbRightButton" onclick="RightButtonClick()" class="PictureScrollButton">></label>
+            <h2>Page
+                <label id="lbCurrentPage">1</label>
+                of
+                <label id="lbTotalPages">@Model.Pages</label>
+            </h2>
+        </div>
+    </div>
+</body>
+</html>

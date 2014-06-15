@@ -1,0 +1,106 @@
+﻿@{
+    Layout = "~/_LayoutPage.cshtml";
+    ViewBag.Title = "Contact";
+}
+
+<script type="text/javascript">
+
+    //save the entered message to disk via ajax post
+    function SaveMessage(subject, body) {
+
+        //get the text from the two inputs 
+        var name = $('#txtName').val();
+        var email = $('#txtEmail').val();
+        var subject = $('#txtSubject').val();
+        var body = $('#txtBody').val();
+        var isPageValid = true;
+
+        //make sure a subject and body are entered
+        if (name.length == 0) {
+            $('#txtName').css({ "border": "2px solid red" });
+            isPageValid = false;
+        }
+        if (email.length == 0) {
+            $('#txtEmail').css({ "border": "2px solid red" });
+            isPageValid = false;
+        }
+        if (subject.length == 0) {
+            $('#txtSubject').css({ "border": "2px solid red" });
+            isPageValid = false;
+        }
+        if (body.length == 0) {
+            $('#txtBody').css({ "border": "2px solid red" });
+            isPageValid = false;
+        }
+
+        //if all required fields are entered post the message data so it can be saved to disk
+        if (isPageValid) {
+            //concat subject and body text to a json message
+            var JSONmessage = '{ ' +
+                '"SubmittedBy": "' + name + '", ' +
+                '"Email": "' + email + '", ' +
+                '"Subject": "' + subject + '", ' +
+                '"Body": "' + body + '" ' +
+                ' }';
+
+            //post the subject and body to save
+            $.ajax({
+                type: 'POST',
+                url: 'contact',
+                data: JSONmessage,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function ValidateReturnedValues(result) {
+                    $('#lbErrorMessage').text("Oops can't do that right now!");
+                    alert('waiting');
+                    document.location = document.location + '/ThankYou';
+                },
+                error: function RedirectToErrorPage() {
+                    $('#lbErrorMessage').text("Oops can't do that right now!");
+                }
+            });
+        }
+    }
+
+    //remove red validation text when user starts to type
+    function ClearErrorCSS(input) {
+        $(input).css({ "border-width": "1px inset", "border-color": "#ccc" });
+    }
+
+</script>
+
+<h1>Contact</h1>
+
+<div class="divider" style="height: 8px; border-radius: 2px;"></div>
+
+<h3>Contact Me! Contact Me! Contact Me!</h3>
+
+<input type="text" style="width: 330px;" id="txtName" placeholder="Name" onchange="ClearErrorCSS(this)" />
+<br />
+<br />
+
+<input type="text" style="width: 330px;" id="txtEmail" placeholder="Email" onchange="ClearErrorCSS(this)" />
+<br />
+<br />
+
+<input type="text" style="width: 660px;" id="txtSubject" placeholder="Subject" onchange="ClearErrorCSS(this)" />
+<br />
+<br />
+
+<textarea style="height: 200px; width: 660px;" id="txtBody" placeholder="Message" onchange="ClearErrorCSS(this)"></textarea>
+<br />
+<br />
+
+<div style="width: 50%; margin: 0 auto;">
+    <div id="divSubmit" onclick="SaveMessage()" class="contactButton" style="float: left; margin-left: 50px;">Submit</div>
+    <a href="/home">
+        <div id="divCancel" class="contactButton" style="float: left;">Cancel</div>
+    </a>
+</div>
+<div style="clear: both;"></div>
+<br />
+<br />
+
+<div style="text-align: center">
+    <label id="lbErrorMessage" style="color: red;"></label>
+</div>
