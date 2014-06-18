@@ -29,7 +29,7 @@ namespace CrystalMVC.Models
             
             Gallery = new List<Thumbnail>();
 
-            //figure out the current page at bottom
+            //figure out the current page at bottom son
             if (files.Count() % neededPics == 0)
                 Pages = files.Count() / neededPics;
             else
